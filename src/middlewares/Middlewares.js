@@ -1,18 +1,21 @@
 import dotenv from 'dotenv'
+import StatusCode from '../../configurations/StatusCode.js'
 
 dotenv.config()
 const { ENVIROMENT } = process.env
 
-const notFound = (req, res, next) => {
-	const error = new Error(`Not found: ${req.originalUrl}`)
-	res.status(404)
+const notFound = (request, response, next) => {
+	const error = new Error(`Not found: ${request.originalUrl}`)
+	response.status(StatusCode.NOT_FOUND)
 	next(error)
 }
 
-const errorHandler = (error, req, res, next) => {
-	const statuscode = res.statusCode === 200 ? 500 : res.statusCode
-	res.status(statuscode)
-	res.json({
+const errorHandler = (error, request, response, next) => {
+	const statuscode = (response.statusCode === StatusCode.OK)
+		? StatusCode.INTERNAL_SERVER_ERROR
+		: response.statusCode
+	response.status(statuscode)
+	response.json({
 		statuscode: statuscode,
 		message: ENVIROMENT === 'PRODUCTION' ? '🚫' : error.message,
 		stacktrace: ENVIROMENT === 'PRODUCTION' ? '🚫' : error.stack,
@@ -27,7 +30,7 @@ const checkToken = (request, response, next) => {
 		request.token = token
 		next()
 	} else {
-		response.sendStatus(403)
+		response.sendStatus(StatusCode.FORBIDDEN)
 	}
 }
 
