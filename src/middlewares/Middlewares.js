@@ -15,7 +15,7 @@ const errorHandler = (error, req, res, next) => {
 	res.json({
 		statuscode: statuscode,
 		message: error.message,
-		stacktrace: ENVIROMENT === 'PRODUCTION' ? null : error.stack,
+		stacktrace: ENVIROMENT === 'PRODUCTION' ? '🚫' : error.stack,
 	})
 }
 
