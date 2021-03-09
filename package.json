@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "mocha 'tests/**'",
 		"dev": "npx nodemon Server.js",
 		"deploy": "git push heroku master",
 		"XXXheroku-postbuild": "npm run install-frontend && npm run build"
@@ -33,10 +33,10 @@
 		"passport-local": "^1.0.0"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.6",
+		"chai": "^4.3.3",
+		"chai-http": "^4.3.0",
 		"eslint": "^7.16.0",
-		"chai": "^4.2.0",
-		"mocha": "^8.2.1",
-		"chai-http": "^4.3.0"
+		"mocha": "^8.3.1",
+		"nodemon": "^2.0.6"
 	}
 }
