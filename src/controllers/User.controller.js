@@ -94,8 +94,20 @@ const registerNewUser = async (request, response, next) => {
 			const user = await UserModel.create({
 				username: request.body.username,
 				password: hashedPassword,
-				name: request.body.name,
-				favouriteProducts: ['1', '2', '3']
+				favouriteProducts: request.body.favouriteProducts,
+				personalDetails: {
+					firstName: 'String',
+					lastName: 'String',
+					gender: true,
+					country: 'String',
+					adress: 'String',
+					secondaryAdress: 'String',
+					ZIPcode: 1337,
+					county: 'String',
+					postOrt: 'String',
+					phone: 1337,
+					secondaryPhone: 1337
+				}
 			})
 			const shoppingCart = await new ShoppingCartModel({
 				user: user._id,

@@ -19,22 +19,38 @@ const userSchema = Schema({
 		index: true,
 		sparse: true
 	},
-	password: { type: String, require: true },
+	password: {
+		type: String,
+		required: true
+	},
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
-	name: {
+	personalDetails: {
 		firstName: String,
-		lastName: String
-	},
-	gender: Boolean,
-	addresses: [{
-		street: String,
-		city: String,
+		lastName: String,
+		gender: Boolean,
 		country: String,
-		zipCode: String
-	}],
-	phone: String,
-	creditCard: {
+		adress: String,
+		secondaryAdress: String,
+		ZIPcode: Number,
+		county: String,
+		postOrt: String,
+		phone: Number,
+		secondaryPhone: Number
+	},
+	billingDetails: {
+/* 		firstName
+		lastName
+		companyname(optional)
+		country
+		streetadress 
+		postcode/zip 
+		town / city 
+		phone 
+		email 
+		optional extra notes */
+	},
+	paymentDetails: {
 		method: String,
 		number: String
 	},
