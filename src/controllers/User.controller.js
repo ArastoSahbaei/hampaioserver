@@ -69,6 +69,19 @@ const login = async (request, response, next) => {
 					.then(user => {
 						const token = jwt.sign({ id: user._id }, 'jwtSecret.secret', { expiresIn: 60 * 60 })
 						response.status(200).send({
+							personalDetails: {
+								firstName: user.personalDetails.firstName,
+								lastName: user.personalDetails.lastName,
+								gender: user.personalDetails.gender,
+								country: user.personalDetails.country,
+								adress: user.personalDetails.adress,
+								secondaryAdress: user.personalDetails.secondaryAdress,
+								ZIPcode: user.personalDetails.ZIPcode,
+								county: user.personalDetails.county,
+								postOrt: user.personalDetails.postOrt,
+								phone: user.personalDetails.phone,
+								secondaryPhone: user.personalDetails.secondaryPhone
+							},
 							shoppingCart: user.shoppingCart,
 							authenticated: true,
 							token,
@@ -167,12 +180,13 @@ const getUserWithQuery = async (request, response) => {
 	}
 }
 
-const updateUser = async (request, response) => {
+const updateValuesOfExistingUser = async (request, response) => {
 	try {
 		if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
 		const databaseResponse = await UserModel.find(request.params.userId, {
 			username: request.body.username,
-			password: request.body.password
+			password: request.body.password,
+			passpersonalDetails: request.body.personalDetails
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
@@ -286,7 +300,7 @@ export default {
 	getAllUsers,
 	getUserByID,
 	getUserWithQuery,
-	updateUser,
+	updateValuesOfExistingUser,
 	deleteUserWithID,
 	updatePassword,
 	forgotPassword,
